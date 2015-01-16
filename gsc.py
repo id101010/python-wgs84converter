@@ -5,6 +5,7 @@
 #
 import csv
 import math
+from optparse import OptionParser
 
 class GPSConverter(object):
     '''
@@ -303,22 +304,59 @@ class GPRMC(object):
 if __name__ == "__main__":
     converter = GPSConverter()
     data = []
-    
-    # Read file
-    inputfile = "Test.csv"
-    outputfile = "Out.csv"
-    lines = csv.reader(open(inputfile, 'r'))
 
-    # Generate a List of filled GPRMC objects
-    for i, line in enumerate(lines):
-        data.append(GPRMC())
-        data[i].parseGPRMC(line)
+    usage = "\n\n"\
+            "%prog [options] outfile.csv"\
+            "Options:\n\n"\
+            "   -c --convert    Converts a single gps.csv file to swisscoordinates.\n"\
+            "   -m --merge      Converts and merges a gps.csv and zug.csv file.\n"
+
+    parser = OptionParser(usage)
+    parser.add_option("-c","--convert", action="store_true")
+    parser.add_option("-m","--merge", action="store_true")
     
-    # Open a new csv file and write [time,lat,lon] to it.    
-    with open(outputfile, 'wb') as csvfile:
-        writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        # Iterate over each object in the list
-        for stuff in data:
-            print "[DEBUG]: " + stuff.generateGPRMC()
-            data = converter.WGS84toLV03(stuff.getLatitude(), stuff.getLongitude(), 0)
-            writer.writerow([stuff.getTime(), data[0], data[1]])
+    options, args = parser.parse_args()
+    
+    if options.convert is True:
+        
+        # Check if enough arguments are provided
+        if len(args) < 2:
+            parser.error("I need more files! gps.csv and out.csv!\n")
+
+        print "[DEBUG]: Converting in process...\n"
+        
+        # Specify and Read file
+        gps = args[0]
+        out = args[1]
+        gps_lines = csv.reader(open(gps, 'r'))
+
+        # Generate a List of filled GPRMC objects
+        for i, line in enumerate(gps_lines):
+            data.append(GPRMC())
+            data[i].parseGPRMC(line)
+        
+        # Open a new csv file and write [time,lat,lon] to it.    
+        with open(out, 'wb') as csvfile:
+            writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            # Iterate over each object in the list
+            for stuff in data:
+                print "[DEBUG]: " + stuff.generateGPRMC()
+                data = converter.WGS84toLV03(stuff.getLatitude(), stuff.getLongitude(), 0)
+                writer.writerow([stuff.getTime(), data[0], data[1]])
+    
+    if options.merge is True:
+
+        # Check if enough arguments are provided
+        if len(args) < 3:
+            parser.error("I need more files! gps.csv, zug.csv, out.csv!")
+        
+        print "[DEBUG]: Mergin in process...\n"
+
+        # Read files
+        gps = args[0]
+        zug = args[1]
+        out = args[2]
+        gps_lines = csv.reader(open(gps, 'r'))
+        zug_lines = csv.reader(open(zug, 'r'))
+
+
