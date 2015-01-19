@@ -4,8 +4,12 @@
 # Find all GPS NMEA Files and convert them to kml files using gpsbabel.
 # 
 
-for file in `find . -type f -name GPS_*.txt -exec which {} \;`
+filename='zugdaten.csv'
+
+for file in `find . -type f -name 'zug.csv'`
 do
-    echo "${file}.kml";
-    gpsbabel -i nmea -f $file -o kml -F "${file}.kml"; 
+    folder=$(dirname ${file})
+    outfile=${folder}/${filename}
+        
+    sed '/^,/d' ${file} > ${outfile}
 done

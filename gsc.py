@@ -253,6 +253,7 @@ class GPRMC(object):
                 if(j == 4):
                     self.LAT_NS = word
                 if(j == 5 and word):
+                    print word
                     lon = float(word)
                     lon = lon/100
                     self.LON = lon
@@ -306,10 +307,7 @@ if __name__ == "__main__":
     data = []
 
     usage = "\n\n"\
-            "%prog [options] outfile.csv"\
-            "Options:\n\n"\
-            "   -c --convert    Converts a single gps.csv file to swisscoordinates.\n"\
-            "   -m --merge      Converts and merges a gps.csv and zug.csv file.\n"
+            "%prog [options] outfile.csv\n"\
 
     parser = OptionParser(usage)
     parser.add_option("-c","--convert", action="store_true")
@@ -340,9 +338,10 @@ if __name__ == "__main__":
             writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             # Iterate over each object in the list
             for stuff in data:
-                print "[DEBUG]: " + stuff.generateGPRMC()
+                #print "[DEBUG]: " + stuff.generateGPRMC()
                 data = converter.WGS84toLV03(stuff.getLatitude(), stuff.getLongitude(), 0)
                 writer.writerow([stuff.getTime(), data[0], data[1]])
+        print "[DEBUG]: Done."
     
     if options.merge is True:
 
@@ -350,7 +349,7 @@ if __name__ == "__main__":
         if len(args) < 3:
             parser.error("I need more files! gps.csv, zug.csv, out.csv!")
         
-        print "[DEBUG]: Mergin in process...\n"
+        print "[DEBUG]: Merging in process... (experimental) \n"
 
         # Read files
         gps = args[0]
