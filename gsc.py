@@ -163,7 +163,7 @@ class GPRMC(object):
     '''
     
     # Object Fields
-    TIME    = 0  # Timestamp
+    TIME    = '' # Timestamp
     VAL     = '' # Validity 
     LAT     = 0  # Current latitude
     LAT_NS  = '' # Direciton of latitude [N or S]
@@ -243,7 +243,12 @@ class GPRMC(object):
         for words in gprmc:
             for j, word in enumerate(words.split(',')):
                 if(j == 1 and word):
-                    self.TIME = int(round(float(word)))
+                    self.TIME, garbage = word.split('.')
+                    HH = self.TIME[0:2]
+                    MM = self.TIME[2:4]
+                    SS = self.TIME[4:6]
+                    self.TIME = HH + ':' + MM + ':' + SS
+                    #print "DEBUG_TIME: %s\n" % self.TIME
                 if(j == 2):
                     self.VAL = word
                 if(j == 3 and word):
@@ -253,7 +258,6 @@ class GPRMC(object):
                 if(j == 4):
                     self.LAT_NS = word
                 if(j == 5 and word):
-                    print word
                     lon = float(word)
                     lon = lon/100
                     self.LON = lon
