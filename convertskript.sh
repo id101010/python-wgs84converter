@@ -1,15 +1,18 @@
 #!/bin/bash
-
 #
-# Find all GPS NMEA Files and convert them to kml files using gpsbabel.
-# 
+#   Find all gps files and convert them to a usable format using gsc.py
+#
 
-filename='zugdaten.csv'
+filename='converted_track.csv'
+searchpath='../Daten/'
 
-for file in `find . -type f -name 'zug.csv'`
+for file in `find ${searchpath} -type f -name 'track.csv'`
 do
     folder=$(dirname ${file})
     outfile=${folder}/${filename}
-        
-    sed '/^,/d' ${file} > ${outfile}
+
+    #echo ${file}
+    #echo ${outfile}
+
+    python2 gsc.py -c ${file} ${outfile}
 done
