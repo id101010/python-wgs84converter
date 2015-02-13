@@ -325,7 +325,7 @@ if __name__ == "__main__":
         if len(args) < 2:
             parser.error("I need more files! gps.csv and out.csv!\n")
 
-        print "[DEBUG]: Converting in process...\n"
+        print "[DEBUG]: \033[34mConverting:\033[0m" + ''.join(args[0])
         
         # Specify and Read file
         gps = args[0]
@@ -342,10 +342,9 @@ if __name__ == "__main__":
             writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             # Iterate over each object in the list
             for stuff in data:
-                #print "[DEBUG]: " + stuff.generateGPRMC()
                 data = converter.WGS84toLV03(stuff.getLatitude(), stuff.getLongitude(), 0)
                 writer.writerow([stuff.getTime(), data[0], data[1]])
-        print "[DEBUG]: Done."
+        print "[DEBUG]: \033[32mDone\033[0m."
     
     if options.merge is True:
 
@@ -353,7 +352,7 @@ if __name__ == "__main__":
         if len(args) < 3:
             parser.error("I need more files! gps.csv, zug.csv, out.csv!")
         
-        print "[DEBUG]: Merging in process... (experimental) \n"
+        print "[DEBUG]: \033[31mMerging... (experimental)\033[0m\n"
 
         # Read files
         gps = args[0]
