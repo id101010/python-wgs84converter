@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-#   Find all .csv files in subfolders and remove blanks
+#   Find all .csv logger files in subfolders and remove blank lines
 # 
 
-filename='zugdaten.csv'
+filename='force.csv'
 
 for file in `find . -type f -name 'zug.csv'`
 do

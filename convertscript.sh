@@ -4,9 +4,9 @@
 #
 
 filename='converted_track.csv'
-searchpath='../Daten/'
+searchpath='Data/'
 
-for file in `find ${searchpath} -type f -name 'track.csv'`
+for file in `find ${searchpath} -type f -name 'example_track.csv'`
 do
     folder=$(dirname ${file})
     outfile=${folder}/${filename}
