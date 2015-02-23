@@ -319,6 +319,7 @@ if __name__ == "__main__":
     
     options, args = parser.parse_args()
     
+    ''' Option convert '''
     if options.convert is True:
         
         # Check if enough arguments are provided
@@ -346,6 +347,7 @@ if __name__ == "__main__":
                 writer.writerow([stuff.getTime(), data[0], data[1]])
         print "[DEBUG]: \033[32mDone\033[0m."
     
+    ''' Option convert and merge '''    
     if options.merge is True:
 
         # Check if enough arguments are provided
@@ -360,5 +362,7 @@ if __name__ == "__main__":
         out = args[2]
         gps_lines = csv.reader(open(gps, 'r'))
         zug_lines = csv.reader(open(zug, 'r'))
+
+        # TODO: Condense the converted gps data and the zug.csv file into one single csv.
 
 
