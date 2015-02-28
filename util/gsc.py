@@ -1,8 +1,12 @@
 #!/usr/bin/python2
 #-*- coding: utf-8 -*-
 #
-# The gsp speed calculator [gsc.py] uses the csv reader to fix nmea strings
+# The wgs_converter converts logfiles given in wgs84 format to the swiss ch1903 format.
+# Additionally the opposite conversion would be possible too but is not yet used.
 #
+# The conversion formulas were taken from swisstopo.admin.ch
+#
+
 import csv
 import math
 from optparse import OptionParser

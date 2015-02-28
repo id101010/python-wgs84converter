@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   Find all gps files and convert them to a usable format using gsc.py
+#   Find all gps files and convert them to the ch1903 format using gsc.py
 #
 
 filename='converted_track.csv'
