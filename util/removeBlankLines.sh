@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-#   Find all .csv logger files in subfolders and remove blank lines
+#   Find all .csv files in subfolders and remove blanks
 # 
 
-filename='force.csv'
+filename='data_noblank.csv'
 
-for file in `find . -type f -name 'zug.csv'`
+for file in `find . -type f -name 'logger_file_with_blank_lines.csv'`
 do
     folder=$(dirname ${file})
     outfile=${folder}/${filename}

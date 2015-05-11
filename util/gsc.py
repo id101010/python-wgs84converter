@@ -1,12 +1,8 @@
 #!/usr/bin/python2
 #-*- coding: utf-8 -*-
 #
-# The wgs_converter converts logfiles given in wgs84 format to the swiss ch1903 format.
-# Additionally the opposite conversion would be possible too but is not yet used.
+# A python script which converts NMEA Strings (WGS84 GPRMC) to the swiss CH1903 format.
 #
-# The conversion formulas were taken from swisstopo.admin.ch
-#
-
 import csv
 import math
 from optparse import OptionParser
@@ -323,7 +319,6 @@ if __name__ == "__main__":
     
     options, args = parser.parse_args()
     
-    ''' Option convert '''
     if options.convert is True:
         
         # Check if enough arguments are provided
@@ -351,9 +346,10 @@ if __name__ == "__main__":
                 writer.writerow([stuff.getTime(), data[0], data[1]])
         print "[DEBUG]: \033[32mDone\033[0m."
     
-    ''' Option convert and merge '''    
     if options.merge is True:
 
+        # To be implemented ... 
+            
         # Check if enough arguments are provided
         if len(args) < 3:
             parser.error("I need more files! gps.csv, zug.csv, out.csv!")
@@ -366,7 +362,5 @@ if __name__ == "__main__":
         out = args[2]
         gps_lines = csv.reader(open(gps, 'r'))
         zug_lines = csv.reader(open(zug, 'r'))
-
-        # TODO: Condense the converted gps data and the zug.csv file into one single csv.
 
 
